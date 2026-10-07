@@ -40,11 +40,11 @@ const FallingPetals = ({
   });
 
   return (
-    <div
-      className="pointer-events-none absolute inset-0 overflow-hidden"
-      style={{ zIndex }}
-      aria-hidden="true"
-    >
+  <div
+  className="pointer-events-none fixed inset-0 overflow-hidden"
+  style={{ zIndex }}
+  aria-hidden="true"
+>
       {petals.map((p) => (
         <span
           key={p.id}

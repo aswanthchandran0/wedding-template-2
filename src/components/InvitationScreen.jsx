@@ -3,14 +3,30 @@ import FallingPetals from './FallingPetals';
 import couplePhoto from '../assets/couple-photo.jpeg';
 import flowerLeft from '../assets/flower-left.png';
 import flowerBottomRight from '../assets/flower-bottom-right.png';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { CalendarDays, MapPin, Heart } from 'lucide-react';
 
-/**
- * InvitationScreen — full-page hero design + greetings + countdown + ceremony + reception + footer.
- * Color palette: deep burgundy to match the flowers.
- */
+import gallary1 from '../assets/gallary1.jpeg';
+import gallary2 from '../assets/gallary2.jpeg';
+import gallary3 from '../assets/gallary3.jpeg';
+import gallary4 from '../assets/gallary4.jpeg';
+// import gallary5 from '../assets/gallary5.jpeg';
+
+const galleryImages = [
+  { id: 1, image: gallary1 },
+  { id: 2, image: gallary2 },
+  { id: 3, image: gallary3 },
+  { id: 4, image: gallary4 },
+//   { id: 5, image: gallary5 },
+];
+
 const InvitationScreen = ({ audioRef }) => {
+  // Couple details
+  const brideName = 'Vaani';
+  const groomName = 'Krish';
+  const brideFull = 'Vaani Batra';
+  const groomFull = 'Krish Kapoor';
+
   // Countdown timer state
   const weddingDate = new Date('2026-09-05T10:00:00');
   const [timeLeft, setTimeLeft] = useState({
@@ -19,6 +35,9 @@ const InvitationScreen = ({ audioRef }) => {
     minutes: 0,
     seconds: 0,
   });
+
+  // Gallery ref (used for stagger animation if needed later)
+  const galleryImagesRef = useRef([]);
 
   // Tick every second
   useEffect(() => {
@@ -44,8 +63,8 @@ const InvitationScreen = ({ audioRef }) => {
 
   // Google Calendar handler
   const addToGoogleCalendar = () => {
-    const title = 'Zaynab & Fahad Wedding';
-    const venue = 'Masjid Al Noor, Kozhikode';
+    const title = `${groomFull} & ${brideFull} Wedding`;
+    const venue = 'The Taj Mahal Palace, Mumbai';
     const startDate = '20260905T100000';
     const endDate = '20260905T170000';
 
@@ -63,7 +82,7 @@ const InvitationScreen = ({ audioRef }) => {
     setTimeout(
       () =>
         window.open(
-          'https://maps.google.com/?q=Masjid+Al+Noor+Kozhikode',
+          'https://maps.google.com/?q=The+Taj+Mahal+Palace+Mumbai',
           '_blank'
         ),
       200
@@ -75,7 +94,7 @@ const InvitationScreen = ({ audioRef }) => {
     setTimeout(
       () =>
         window.open(
-          'https://maps.google.com/?q=The+Gateway+Hotel+Kozhikode',
+          'https://maps.google.com/?q=The+St+Regis+Mumbai',
           '_blank'
         ),
       200
@@ -96,13 +115,14 @@ const InvitationScreen = ({ audioRef }) => {
   };
 
   return (
-    <div
-      className="relative min-h-screen w-full overflow-hidden"
-      style={{
-        backgroundColor: '#EFE4D3',
-        animation: 'fadeIn 1s ease forwards',
-      }}
-    >
+   <div
+  className="relative w-full overflow-x-hidden"
+  style={{
+    backgroundColor: '#EFE4D3',
+    minHeight: '100vh',
+    animation: 'fadeIn 1s ease forwards',
+  }}
+>
       <MusicController audioRef={audioRef} />
 
       {/* Soft palm shadow overlay */}
@@ -113,46 +133,6 @@ const InvitationScreen = ({ audioRef }) => {
             'radial-gradient(circle at 95% 5%, rgba(80,60,40,0.10) 0%, transparent 35%), radial-gradient(circle at 5% 95%, rgba(80,60,40,0.10) 0%, transparent 35%)',
         }}
       />
-
-      {/* Thin burgundy vertical lines (left + right) */}
-      <div
-        className="pointer-events-none absolute top-8 bottom-8 hidden md:block"
-        style={{
-          left: '5%',
-          width: '1px',
-          background: 'rgba(139, 26, 26, 0.3)',
-        }}
-      />
-      <div
-        className="pointer-events-none absolute top-8 bottom-8 hidden md:block"
-        style={{
-          right: '5%',
-          width: '1px',
-          background: 'rgba(139, 26, 26, 0.3)',
-        }}
-      />
-
-      {/* Small stars on vertical lines (mid-height) */}
-      <div
-        className="pointer-events-none absolute top-1/2 hidden -translate-y-1/2 md:block"
-        style={{
-          left: 'calc(5% - 4px)',
-          color: '#8B1A1A',
-          fontSize: '10px',
-        }}
-      >
-        ✦
-      </div>
-      <div
-        className="pointer-events-none absolute top-1/2 hidden -translate-y-1/2 md:block"
-        style={{
-          right: 'calc(5% - 4px)',
-          color: '#8B1A1A',
-          fontSize: '10px',
-        }}
-      >
-        ✦
-      </div>
 
       {/* ===== CONTENT ===== */}
       <div className="relative z-10 mx-auto flex max-w-[560px] flex-col items-center px-6 py-16">
@@ -233,24 +213,26 @@ const InvitationScreen = ({ audioRef }) => {
             />
           </div>
 
-          <div className="flex items-center justify-center gap-3">
+          {/* ===== COUPLE NAMES ===== */}
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-center">
             <span
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(20px, 4vw, 26px)',
-                letterSpacing: '0.28em',
+                fontSize: 'clamp(16px, 3.2vw, 24px)',
+                letterSpacing: '0.22em',
                 textTransform: 'uppercase',
                 color: '#8B1A1A',
                 fontWeight: 500,
+                whiteSpace: 'nowrap',
               }}
             >
-              Zaynab
+              {groomName}
             </span>
 
             <span
               style={{
                 fontFamily: "'Great Vibes', cursive",
-                fontSize: 'clamp(28px, 5vw, 36px)',
+                fontSize: 'clamp(24px, 4.5vw, 32px)',
                 color: '#6E0F0F',
                 lineHeight: 1,
               }}
@@ -261,16 +243,32 @@ const InvitationScreen = ({ audioRef }) => {
             <span
               style={{
                 fontFamily: "'Cormorant Garamond', serif",
-                fontSize: 'clamp(20px, 4vw, 26px)',
-                letterSpacing: '0.28em',
+                fontSize: 'clamp(16px, 3.2vw, 24px)',
+                letterSpacing: '0.22em',
                 textTransform: 'uppercase',
                 color: '#8B1A1A',
                 fontWeight: 500,
+                whiteSpace: 'nowrap',
               }}
             >
-              Fahad
+              {brideName}
             </span>
           </div>
+
+          <p
+            className="text-center mt-3"
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 'clamp(11px, 2vw, 13px)',
+              letterSpacing: '0.3em',
+              textTransform: 'uppercase',
+              color: '#6E0F0F',
+              opacity: 0.75,
+              fontWeight: 500,
+            }}
+          >
+            {groomFull} &nbsp;·&nbsp; {brideFull}
+          </p>
 
           <Divider small />
 
@@ -504,7 +502,7 @@ const InvitationScreen = ({ audioRef }) => {
             }}
           >
             We would love for you to be a part of our intimate celebration at
-            Masjid Al Noor, Kozhikode.
+            The Taj Mahal Palace, Mumbai.
           </p>
 
           <p
@@ -521,7 +519,6 @@ const InvitationScreen = ({ audioRef }) => {
             Muhurtham
           </p>
 
-          {/* ✅ Changed from "Ceremony" to "Nikah" to avoid repetition */}
           <h3
             style={{
               fontFamily: "'Great Vibes', cursive",
@@ -554,9 +551,10 @@ const InvitationScreen = ({ audioRef }) => {
               fontWeight: 500,
               letterSpacing: '0.05em',
               marginBottom: '32px',
+              maxWidth: '360px',
             }}
           >
-            Masjid Al Noor, Kozhikode
+            The Taj Mahal Palace, Mumbai
           </p>
 
           <button
@@ -712,7 +710,7 @@ const InvitationScreen = ({ audioRef }) => {
               maxWidth: '360px',
             }}
           >
-            The Gateway Hotel, Kozhikode
+            The St. Regis, Mumbai
           </p>
 
           <button
@@ -740,10 +738,78 @@ const InvitationScreen = ({ audioRef }) => {
           </div>
         </div>
 
+        {/* ---------- GALLERY SECTION ---------- */}
+        <div className="w-full py-20 flex flex-col items-center text-center">
+          <p
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: '12px',
+              letterSpacing: '0.42em',
+              textTransform: 'uppercase',
+              color: '#8B1A1A',
+              fontWeight: 500,
+              marginBottom: '16px',
+            }}
+          >
+            Our Moments
+          </p>
+
+          <h2
+            style={{
+              fontFamily: "'Great Vibes', cursive",
+              fontSize: 'clamp(42px, 8vw, 60px)',
+              color: '#6E0F0F',
+              lineHeight: 1.1,
+              marginBottom: '16px',
+            }}
+          >
+            Gallery
+          </h2>
+
+          <p
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontSize: '13px',
+              lineHeight: 1.8,
+              color: '#5A3A3A',
+              fontWeight: 300,
+              maxWidth: '420px',
+              margin: '0 auto 40px',
+              letterSpacing: '0.02em',
+            }}
+          >
+            A glimpse of our beautiful journey together.
+          </p>
+
+          <Divider small />
+
+          {/* Photo grid */}
+          <div className="mt-10 grid w-full grid-cols-2 gap-3 sm:gap-4">
+            {galleryImages.map((item, index) => (
+              <div
+                key={item.id}
+                ref={(el) => (galleryImagesRef.current[index] = el)}
+                className="overflow-hidden"
+                style={{
+                  boxShadow: '0 10px 30px rgba(80, 60, 40, 0.10)',
+                }}
+              >
+                <img
+                  src={item.image}
+                  alt={`Gallery ${item.id}`}
+                  className="aspect-[3/4] w-full object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: '40px' }}>
+            <Divider />
+          </div>
+        </div>
+
         {/* ---------- CLOSING / FOOTER SECTION ---------- */}
         <div className="w-full py-20 flex flex-col items-center text-center">
-
-          {/* Closing heading */}
           <h2
             style={{
               fontFamily: "'Great Vibes', cursive",
@@ -767,7 +833,6 @@ const InvitationScreen = ({ audioRef }) => {
             friends &amp; family
           </h2>
 
-          {/* Closing message */}
           <p
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -783,19 +848,19 @@ const InvitationScreen = ({ audioRef }) => {
             Thank you for being part of our forever.
           </p>
 
-          {/* Couple names */}
           <p
+            className="text-center"
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '13px',
-              letterSpacing: '0.4em',
+              fontSize: 'clamp(11px, 2vw, 13px)',
+              letterSpacing: '0.3em',
               textTransform: 'uppercase',
               color: '#8B1A1A',
               fontWeight: 500,
               marginBottom: '32px',
             }}
           >
-            Zaynab &amp; Fahad
+            {groomFull} &nbsp;·&nbsp; {brideFull}
           </p>
 
           <Divider small />
@@ -806,7 +871,6 @@ const InvitationScreen = ({ audioRef }) => {
             aria-label="Visit Everloom"
             className="group mt-12 inline-flex flex-col items-center gap-3 cursor-pointer bg-transparent border-none focus:outline-none transition-all duration-500 hover:scale-105 active:scale-95"
           >
-            {/* Icon circle */}
             <span
               className="relative flex items-center justify-center w-11 h-11 rounded-full transition-all duration-500 group-hover:rotate-12"
               style={{
@@ -822,7 +886,6 @@ const InvitationScreen = ({ audioRef }) => {
               />
             </span>
 
-            {/* Text */}
             <span className="flex flex-col items-center leading-tight">
               <span
                 style={{
@@ -861,7 +924,6 @@ const InvitationScreen = ({ audioRef }) => {
             </span>
           </button>
 
-          {/* Bottom line */}
           <p
             style={{
               fontFamily: "'Cormorant Garamond', serif",
@@ -880,7 +942,6 @@ const InvitationScreen = ({ audioRef }) => {
 
       {/* ===== FALLING PETALS ===== */}
       <FallingPetals count={16} color="#8B1A1A" mixLeaves={false} zIndex={50} />
-      {/* Global keyframes */}
       <style>{`
         @keyframes fadeIn {
           from { opacity: 0; }

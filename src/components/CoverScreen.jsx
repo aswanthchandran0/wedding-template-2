@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 /**
  * CoverScreen — the initial "Tap to Open" splash screen.
@@ -38,7 +39,7 @@ const CoverScreen = ({ coverBg, onOpen }) => {
       <button
         onClick={handleClick}
         aria-label="Open invitation"
-        className="relative z-10 flex min-h-screen w-full cursor-pointer flex-col items-center justify-center border-none bg-transparent px-8 focus:outline-none"
+        className="relative z-10 flex min-h-screen w-full cursor-pointer flex-col items-center justify-center border-none bg-transparent px-6 sm:px-8 focus:outline-none"
       >
         {/* Monogram */}
         <div
@@ -49,39 +50,42 @@ const CoverScreen = ({ coverBg, onOpen }) => {
             letterSpacing: '0.05em',
             color: '#2B2B2B',
             lineHeight: 1,
-            marginBottom: '56px',
+            marginBottom: '48px',
             opacity: 0,
             animation: 'fadeUp 1.4s cubic-bezier(.22,.9,.32,1) .4s forwards',
           }}
         >
-          Z<span style={{ fontStyle: 'italic', margin: '0 -0.05em' }}>F</span>
+          K<span style={{ fontStyle: 'italic', margin: '0 -0.05em' }}>V</span>
         </div>
 
-        {/* Couple names */}
+        {/* Couple names — single line, auto-scaling */}
         <h1
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(14px, 3.2vw, 20px)',
-            letterSpacing: '0.42em',
+            fontSize: 'clamp(11px, 2.6vw, 18px)',
+            letterSpacing: 'clamp(0.18em, 1.4vw, 0.36em)',
             fontWeight: 400,
             color: '#2B2B2B',
             textTransform: 'uppercase',
             marginBottom: '12px',
+            paddingLeft: '0.36em',
+            whiteSpace: 'nowrap',
             opacity: 0,
             animation: 'fadeUp 1.4s cubic-bezier(.22,.9,.32,1) .7s forwards',
           }}
         >
-          Zaynab · Fahad
+          Krish Kapoor · Vaani Batra
         </h1>
 
-        {/* Date */}
+        {/* Date — SAME SIZE as original (11px → 15px) */}
         <p
           style={{
             fontFamily: "'Cormorant Garamond', serif",
             fontSize: 'clamp(11px, 2.4vw, 15px)',
             letterSpacing: '0.5em',
+            paddingLeft: '0.5em',
             color: '#7A7372',
-            marginBottom: '64px',
+            marginBottom: '56px',
             opacity: 0,
             animation: 'fadeUp 1.4s cubic-bezier(.22,.9,.32,1) .95s forwards',
           }}
@@ -106,23 +110,47 @@ const CoverScreen = ({ coverBg, onOpen }) => {
           <p>and may your blessings light our way."</p>
         </div>
 
-        {/* Tap to Open */}
-        <p
+        {/* TAP TO OPEN */}
+        <div
+          className="mt-16 flex flex-col items-center gap-3"
           style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: '11px',
-            letterSpacing: '0.4em',
-            textTransform: 'uppercase',
-            color: '#7A7372',
-            marginTop: '80px',
             opacity: 0,
-            animation:
-              'fadeUp 1.4s cubic-bezier(.22,.9,.32,1) 1.5s forwards, pulseSoft 3s ease-in-out 2.5s infinite',
+            animation: 'fadeUp 1.4s cubic-bezier(.22,.9,.32,1) 1.5s forwards',
           }}
         >
-          Tap to Open
-        </p>
+          <span
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: '11px',
+              letterSpacing: '0.42em',
+              paddingLeft: '0.42em',
+              textTransform: 'uppercase',
+              color: '#2B2B2B',
+              fontWeight: 600,
+              textShadow: '0 1px 8px rgba(255,255,255,0.9)',
+            }}
+          >
+            Tap to Open
+          </span>
+        </div>
       </button>
+
+      <style>{`
+        @keyframes bounceDown {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(4px); }
+        }
+        @keyframes pulseRing {
+          0%   { transform: scale(1);   opacity: 0.7; }
+          70%  { transform: scale(1.6); opacity: 0; }
+          100% { transform: scale(1.6); opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="bounceDown"], [style*="pulseRing"] {
+            animation: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
